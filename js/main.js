@@ -26,36 +26,44 @@ const details = books => {
     const p = document.createElement('p');
     p.classList.add('text-center','fw-lighter','fs-5','mb-4');
     containerDiv.appendChild(p);
-    p.innerText = `-----Showing ${books.docs.length} results of ${books.numFound} Books-----`
+    p.innerText = `-----Showing ${books.docs.length} results of ${books.numFound} Books-----`;
     books.docs.forEach(book => {
+      // if author name property is not in the object //
       if(book.author_name === undefined){
-        book.author_name = "Unknown";
+        //do nothing
+      } 
+      // if publisher property is not in the object //
+      else if(book.publisher === undefined){
+        //do nothing
       }
-      const div = document.createElement('div');
-      div.classList.add('col-4');
-      div.innerHTML = `
-      <div class="card mb-3 shadow" style="max-width: 540px;">
+      // creating div to show in webpage //
+      else{
+        const div = document.createElement('div');
+        div.classList.add('col-4');
+        div.innerHTML = `
+        <div class="card mb-3 shadow" style="max-width: 540px;">
         <div class="row g-0">
           <div class="col-md-4">
             <img src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg" class="img-fluid rounded-start" alt="...">
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">${book.title}</h5>
-              <h6 class="card-title">By ${book.author_name}</h6>
-              <p class="card-text">Publisher : ${book.publisher}</p>
-              <p class="card-text">First Publish Year : ${book.first_publish_year}</p>
+              <h5 class="card-title">${book.text[2][0]==='O'?book.text[1]:book.text[2]}</h5>
+              <h6 class="card-title">By ${book.author_name[0]}</h6>
+              <p class="card-text">Publisher : ${book.publisher[0]}</p>
+              <p class="card-text">First Publish Year : ${book.first_publish_year===undefined?'Unknown':book.first_publish_year}</p>
               <button class="btn btn-outline-info">Add to cart</button>
             </div>
           </div>
         </div>
-      </div>
-      `;
-      containerDiv.appendChild(div);
+        </div>
+        `;
+        containerDiv.appendChild(div);
+      }
     })
   }
-  
 }
+// handling all the errors using a function //
 const errorHandler = msg => {
   const errorContainer = document.getElementById('error');
     errorContainer.textContent = '';

@@ -3,7 +3,7 @@ const loadBooks = () => {
   const inputField = document.getElementById('input-field');
   const searchText = inputField.value;
   if(searchText){
-    const url = `http://openlibrary.org/search.json?q=${searchText}`;
+    const url = `https://openlibrary.org/search.json?q=${searchText}`;
     fetch(url)
       .then(res => res.json())
       .then(data => details(data))
